@@ -1,7 +1,5 @@
 'use strict'
 
-const Color = require('color')
-
 const gruvboxRedColor = '#cc241d'
 const gruvboxGreenColor = '#98971a'
 const gruvboxYellowColor = '#d79921'
@@ -164,6 +162,14 @@ var backgroundColorOptions = {
 }
 
 exports.decorateConfig = config => {
+
+  function clamp(num, min, max)
+    {
+    return num <= min ? min : num >= max ? max : num;
+    }
+
+  var themeBackgroundAlphaPercent = config.gruvboxTheme.backgroundAlpha
+  var themeBackgroundAlpha = Math.round((clamp(themeBackgroundAlphaPercent, 0, 100) / 100 * 255)).toString(16)
   var themeStyle = config.gruvboxTheme.style || 'dark'
   var themeContrast = config.gruvboxTheme.contrast || 'normal'
   var terminalForegroundColor = terminalForegrounds[themeStyle]
@@ -174,7 +180,7 @@ exports.decorateConfig = config => {
 
   return Object.assign({}, config, {
     foregroundColor: terminalForegroundColor,
-    backgroundColor: terminalBackgroundColor,
+    backgroundColor: terminalBackgroundColor + themeBackgroundAlpha,
     colors: terminalColors[themeStyle],
     cursorColor: gruvboxOrangeColor,
     css: `
