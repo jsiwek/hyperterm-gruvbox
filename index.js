@@ -168,10 +168,10 @@ exports.decorateConfig = config => {
     return num <= min ? min : num >= max ? max : num;
     }
 
-  var themeBackgroundAlphaPercent = config.gruvboxTheme.backgroundAlpha
+  var themeBackgroundAlphaPercent = config.hasOwnProperty('gruvboxTheme') ? config.gruvboxTheme.backgroundAlpha || "100" : "100"
   var themeBackgroundAlpha = Math.round((clamp(themeBackgroundAlphaPercent, 0, 100) / 100 * 255)).toString(16)
-  var themeStyle = config.gruvboxTheme.style || 'dark'
-  var themeContrast = config.gruvboxTheme.contrast || 'normal'
+  var themeStyle = config.hasOwnProperty('gruvboxTheme') ? config.gruvboxTheme.style || 'dark' : 'dark'
+  var themeContrast = config.hasOwnProperty('gruvboxTheme') ? config.gruvboxTheme.contrast || 'normal' : 'normal'
   var terminalForegroundColor = terminalForegrounds[themeStyle]
   var terminalBackgroundColor = terminalBackgrounds[themeStyle][themeContrast]
   var backgroundColors = backgroundColorOptions[themeStyle]
